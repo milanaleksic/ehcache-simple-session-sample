@@ -8,7 +8,7 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/css/core.css">
     </head>
-    <body class="backend">
+    <body>
         <div class="header">
             <h3>ehcache-simple-session-sample Console</h3>
         </div>

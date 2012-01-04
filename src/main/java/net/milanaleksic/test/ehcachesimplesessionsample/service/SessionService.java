@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface SessionService {
 
-    String COOKIE_NAME = "MAN-BACKEND-AUTH-COOKIE";
+    String COOKIE_NAME = "AUTH-COOKIE";
 
     SessionInformation checkLoggedIn(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
 

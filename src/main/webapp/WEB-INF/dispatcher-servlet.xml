@@ -13,10 +13,10 @@
 
     <aop:config>
         <aop:aspect ref="sessionService">
-            <aop:pointcut id="backEndAuthorizationNeeded"
+            <aop:pointcut id="authorizationNeeded"
                           expression="execution(* net.milanaleksic.test.ehcachesimplesessionsample.controller.impl.PageControllerImpl.*(..))
-                            and @annotation(net.milanaleksic.test.ehcachesimplesessionsample.BackEndAuthorizationNeeded)"/>
-            <aop:around pointcut-ref="backEndAuthorizationNeeded" method="authorize"/>
+                            and @annotation(net.milanaleksic.test.ehcachesimplesessionsample.AuthorizationNeeded)"/>
+            <aop:around pointcut-ref="authorizationNeeded" method="authorize"/>
         </aop:aspect>
     </aop:config>
 
