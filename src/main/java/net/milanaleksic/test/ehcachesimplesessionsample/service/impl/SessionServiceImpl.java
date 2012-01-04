@@ -6,7 +6,8 @@ import net.milanaleksic.test.ehcachesimplesessionsample.service.value.SessionInf
 import net.milanaleksic.test.ehcachesimplesessionsample.service.value.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.*;
@@ -14,12 +15,22 @@ import java.util.UUID;
 
 public class SessionServiceImpl implements SessionService {
 
-    @Autowired
+    private static final Logger log = LoggerFactory.getLogger(SessionServiceImpl.class);
+
     private CacheService cacheService;
 
     private String illegalAccessViewName;
 
     private int expirationInSeconds;
+    private String logOutUri;
+
+    public void setLogOutUri(String logOutUri) {
+        this.logOutUri = logOutUri;
+    }
+
+    public void setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
+    }
 
     public void setIllegalAccessViewName(String illegalAccessViewName) {
         this.illegalAccessViewName = illegalAccessViewName;
@@ -39,7 +50,11 @@ public class SessionServiceImpl implements SessionService {
             logOut(servletRequest, servletResponse);
             return null;
         }
-        createOrRefreshSessionInformation(authToken, sessionInformation, servletResponse);
+        if (logOutUri != null && servletRequest.getRequestURI().endsWith(logOutUri)) {
+            log.info("Log Out detected, no session refresh will be executed");
+        } else {
+            createOrRefreshSessionInformation(authToken, sessionInformation, servletResponse);
+        }
         return sessionInformation;
     }
 
@@ -66,20 +81,6 @@ public class SessionServiceImpl implements SessionService {
         deletedCookie.setMaxAge(0);
         servletResponse.addCookie(deletedCookie);
         cacheService.remove(createTokenCacheKey(authToken));
-    }
-
-    @Override
-    public boolean getFailedLoginInformation(HttpServletRequest servletRequest) {
-        return cacheService.get(generateFailedLoginKey(servletRequest.getRemoteAddr())) != null;
-    }
-
-    private String generateFailedLoginKey(String ip) {
-        return "FailedLogin," + ip;
-    }
-
-    @Override
-    public void saveLoginFailedInformation(HttpServletRequest servletRequest) {
-        cacheService.put(generateFailedLoginKey(servletRequest.getRemoteAddr()), "true", 300);
     }
 
     @Override

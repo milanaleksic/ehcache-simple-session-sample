@@ -26,7 +26,7 @@ public class PageControllerImpl implements PageController {
             mav.getModel().put("command", new LoginForm());
             return mav;
         } else
-            return new ModelAndView("backend");
+            return new ModelAndView("redirect:/console");
     }
 
     public ModelAndView login(HttpServletRequest servletRequest, HttpServletResponse servletResponse,
@@ -38,7 +38,6 @@ public class PageControllerImpl implements PageController {
             return new ModelAndView("redirect:/");
         } catch (Exception e) {
             log.warn("Login failed for user: " + loginForm.getUsername(), e);
-            sessionService.saveLoginFailedInformation(servletRequest);
             ModelAndView catchAll = catchAll(servletRequest, servletResponse);
             catchAll.getModel().put("error", "Login Failed: " + e.getMessage());
             return catchAll;

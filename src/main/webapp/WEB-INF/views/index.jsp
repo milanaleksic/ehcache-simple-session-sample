@@ -3,13 +3,14 @@
 <!DOCTYPE html>
     <html lang="en" xml:lang="en">
         <head>
-        <title>Milan Aleksic Net - BackEnd Console</title>
+        <title>ehcache-simple-session-sample Test Login</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/css/core.css">
     </head>
     <body class="backend">
         <div class="container">
-            <h4>MilanAleksic.Net BackEnd Console</h4>
+            <h4>ehcache-simple-session-sample Test Login</h4>
+            <div>Only admin/admin accepted</div>
             <c:if test="${error != null}">
                 <div class="errorMessage">
                     ${error}

@@ -7,6 +7,10 @@
 
     <bean id="pageController" class="net.milanaleksic.test.ehcachesimplesessionsample.controller.impl.PageControllerImpl" />
 
+    <context:component-scan base-package="net.milanaleksic.test.ehcachesimplesessionsample.controller">
+        <context:exclude-filter type="regex" expression="net\.milanaleksic\.test\.ehcachesimplesessionsample\.controller\.PageControllerImpl"/>
+    </context:component-scan>
+
     <aop:config>
         <aop:aspect ref="sessionService">
             <aop:pointcut id="backEndAuthorizationNeeded"
@@ -22,8 +26,6 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="defaultHandler" ref="pageController"/>
     </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>

@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html lang="en" xml:lang="en">
     <head>
-        <title>Milan Aleksic Net - BackEnd Console</title>
+        <title>ehcache-simple-session-sample Console</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/css/core.css">
     </head>
     <body class="backend">
         <div class="header">
-            <h3>Milan Aleksic Net - BackEnd Console</h3>
+            <h3>ehcache-simple-session-sample Console</h3>
         </div>
         <div class="menu">
             <a href="/console">Main console</a>
@@ -21,7 +21,7 @@
                     ${info}
                 </div>
             </c:if>
-            <div>Weee, you are logged in correctly!</div>
+            <div>Great, you are logged in correctly!</div>
         </div>
         <div class="footer">&copy; 2011-2012 by Milan.Aleksic@gmail.com</div>
     </body>

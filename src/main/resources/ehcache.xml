@@ -1,6 +1,6 @@
 <ehcache>
 
-    <diskStore path="java.io.tmpdir"/>
+    <diskStore path="c:\temp\"/>
 
     <cache
         name="man-application"

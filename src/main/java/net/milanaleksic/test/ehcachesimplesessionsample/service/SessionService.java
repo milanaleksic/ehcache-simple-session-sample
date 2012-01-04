@@ -12,16 +12,10 @@ public interface SessionService {
 
     SessionInformation checkLoggedIn(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
 
-    boolean getFailedLoginInformation(HttpServletRequest servletRequest);
-
-    void saveLoginFailedInformation(HttpServletRequest servletRequest);
-
     Object authorize(ProceedingJoinPoint joinPoint) throws Throwable;
 
     void login(HttpServletResponse servletResponse, String username, String password);
 
     void logOut(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
-
-    void setIllegalAccessViewName(String illegalAccessViewName);
 
 }
