@@ -14,7 +14,7 @@ public interface SessionService {
 
     Object authorize(ProceedingJoinPoint joinPoint) throws Throwable;
 
-    void login(HttpServletResponse servletResponse, String username, String password);
+    void login(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String password);
 
     void logOut(HttpServletRequest servletRequest, HttpServletResponse servletResponse);
 

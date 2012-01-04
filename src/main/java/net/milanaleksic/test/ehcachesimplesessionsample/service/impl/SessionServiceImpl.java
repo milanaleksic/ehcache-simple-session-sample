@@ -53,14 +53,19 @@ public class SessionServiceImpl implements SessionService {
         if (logOutUri != null && servletRequest.getRequestURI().endsWith(logOutUri)) {
             log.info("Log Out detected, no session refresh will be executed");
         } else {
-            createOrRefreshSessionInformation(authToken, sessionInformation, servletResponse);
+            createOrRefreshSessionInformation(authToken, sessionInformation, servletRequest, servletResponse);
         }
         return sessionInformation;
     }
 
-    private void createOrRefreshSessionInformation(String authToken, SessionInformation sessionInformation, HttpServletResponse servletResponse) {
+    private void createOrRefreshSessionInformation(String authToken, SessionInformation sessionInformation, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         createOrRefreshSessionInformationInCache(authToken, sessionInformation);
         createOrRefreshSessionInformationInCookie(authToken, servletResponse);
+        createOrRefreshSessionInformationInRequest(sessionInformation, servletRequest);
+    }
+
+    private void createOrRefreshSessionInformationInRequest(SessionInformation sessionInformation, HttpServletRequest servletRequest) {
+        servletRequest.setAttribute("explicitSession", sessionInformation);
     }
 
     private void createOrRefreshSessionInformationInCache(String authToken, SessionInformation sessionInformation) {
@@ -139,15 +144,15 @@ public class SessionServiceImpl implements SessionService {
         return "SecurityToken," + token;
     }
 
-    private void recordLogIn(User user, HttpServletResponse servletResponse) {
+    private void recordLogIn(User user, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String token = UUID.randomUUID().toString();
         SessionInformation sessionInformation = new SessionInformation();
         sessionInformation.setUser(user);
-        createOrRefreshSessionInformation(token, sessionInformation, servletResponse);
+        createOrRefreshSessionInformation(token, sessionInformation, servletRequest, servletResponse);
     }
 
     @Override
-    public void login(HttpServletResponse servletResponse, String username, String password) {
+    public void login(HttpServletRequest servletRequest, HttpServletResponse servletResponse, String username, String password) {
         if (username == null || password == null)
             throw new RuntimeException("Unrecognized username/password combination");
         User user = null;
@@ -158,7 +163,7 @@ public class SessionServiceImpl implements SessionService {
             throw new RuntimeException("Unrecognized username/password combination");
         if (!username.equals(user.getUsername()) || !password.equals(user.getPassword()))
             throw new RuntimeException("Unrecognized username/password combination");
-        recordLogIn(user, servletResponse);
+        recordLogIn(user, servletRequest, servletResponse);
     }
 
 }

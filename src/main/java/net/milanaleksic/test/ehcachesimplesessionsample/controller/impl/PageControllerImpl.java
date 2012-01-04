@@ -34,7 +34,7 @@ public class PageControllerImpl implements PageController {
         try {
             if (log.isInfoEnabled())
                 log.info("Login attempt for user: {}", loginForm.getUsername());
-            sessionService.login(servletResponse, loginForm.getUsername(), loginForm.getPassword());
+            sessionService.login(servletRequest, servletResponse, loginForm.getUsername(), loginForm.getPassword());
             return new ModelAndView("redirect:/");
         } catch (Exception e) {
             log.warn("Login failed for user: " + loginForm.getUsername(), e);
