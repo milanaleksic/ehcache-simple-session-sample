@@ -37,11 +37,14 @@ public class SessionInformation implements Externalizable {
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(user);
+        out.writeObject(attributes);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        user = (User)in.readObject();
+        user = (User) in.readObject();
+        attributes = (Map<String, Serializable>) in.readObject();
     }
 
     private class IteratorToEnumerable implements Enumeration<String> {
