@@ -18,11 +18,12 @@ public class EhCacheServiceImpl implements CacheService, ApplicationContextAware
 
     private String cacheName;
 
+    private CacheManager cacheManager;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (log.isInfoEnabled())
             log.info("Using cache name {} as application cache", cacheName);
-        CacheManager cacheManager = CacheManager.getInstance();
         applicationCache = cacheManager.getCache(cacheName);
         if (applicationCache == null) {
             log.warn("Cache name {} could not be found. Will use default cache", cacheName);
@@ -59,4 +60,7 @@ public class EhCacheServiceImpl implements CacheService, ApplicationContextAware
         applicationCache.remove(key);
     }
 
+    public void setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 }

@@ -3,7 +3,7 @@
     <diskStore path="c:\temp\"/>
 
     <cache
-        name="man-application"
+        name="session-cache"
         maxElementsInMemory="10000"
         eternal="false"
         timeToIdleSeconds="1800"
